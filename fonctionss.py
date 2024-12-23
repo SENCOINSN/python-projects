@@ -107,6 +107,7 @@ print(fun(out=2))
 
 dictionary = {'one': 'two', 'three': 'one', 'two': 'three'}
 v = dictionary['one']
+v= dictionary.get('one') # other way to get value
  
 for k in range(len(dictionary)):
     v = dictionary[v]
