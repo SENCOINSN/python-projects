@@ -35,6 +35,46 @@ class HoneyPotSimulator:
                     "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n",
                     "POST /admin HTTP/1.1\r\nHost: localhost\r\nContent-Length: 0\r\n\r\n",
                     "GET /wp-admin HTTP/1.1\r\nHost: localhost\r\n\r\n"
+                ],
+                25: [  # SMTP commands
+                    "EHLO localhost\r\n",
+                    "VRFY admin\r\n",
+                    "RCPT TO: admin\r\n",
+                    "DATA\r\n",
+                    ".\r\n"
+                ],
+                443: [  # HTTPS requests
+                    "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n",
+                    "POST /admin HTTP/1.1\r\nHost: localhost\r\nContent-Length: 0\r\n\r\n",
+                    "GET /wp-admin HTTP/1.1\r\nHost: localhost\r\n\r\n"
+                ],
+                3306: [  # MySQL commands
+                    " mysql -h localhost -u admin -ppassword\r\n",
+                    "SHOW DATABASES;\r\n",
+                    "CREATE DATABASE test\r\n",
+                    "DROP DATABASE test\r\n",
+                    "SELECT * FROM users\r\n",
+                    "INSERT INTO users (username, password) VALUES ('admin', 'password123')\r\n",
+                    "DELETE FROM users WHERE username = 'admin'\r\n"
+                ],
+                5432: [  # PostgreSQL commands
+                    "psql -h localhost -U admin -W\r\n",
+                    "\\l\r\n",
+                    "CREATE DATABASE test\r\n",
+                    "DROP DATABASE test\r\n",
+                    "\\c test\r\n",
+                    "CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(255), password VARCHAR(255))\r\n",
+                    "INSERT INTO users (username, password) VALUES ('admin', 'password123')\r\n",
+                    "DELETE FROM users WHERE username = 'admin'\r\n"    
+                ],
+                27017: [  # MongoDB commands    
+                    "mongo\r\n",
+                    "use admin\r\n",    
+                    "db.createUser({user: 'admin', pwd: 'password123', roles: ['dbOwner']})\r\n",
+                    "db.dropDatabase()\r\n",
+                    "db.users.find()\r\n",
+                    "db.users.insertOne({username: 'admin', password: 'password123'})\r\n",
+                    "db.users.deleteOne({username: 'admin'})\r\n"
                 ]
             }
             #Intensity settings for different attack levels
@@ -98,8 +138,8 @@ class HoneyPotSimulator:
             """
             Simulate a brute force attack on a target port.""" 
             
-            common_usernames = ["admin", "root", "user", "test"]
-            common_passwords = ["password123", "admin123", "123456", "root"]
+            common_usernames = ["admin", "root", "user", "test","pass","guest","user123","admin123"]
+            common_passwords = ["password123", "admin123", "123456", "root","passer123","pass"]
             
             print(f"Starting brute force attack on port {port}")
             

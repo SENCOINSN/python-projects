@@ -37,7 +37,11 @@ class HoneyPot:
             21: "220 FTP server ready\r\n",
             22: "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.1\r\n",
             80: "HTTP/1.1 200 OK\r\nServer: Apache/2.4.41 (Ubuntu)\r\n\r\n",
-            443: "HTTP/1.1 200 OK\r\nServer: Apache/2.4.41 (Ubuntu)\r\n\r\n"
+            443: "HTTP/1.1 200 OK\r\nServer: Apache/2.4.41 (Ubuntu)\r\n\r\n",
+            25: "220 mail.example.com ESMTP Postfix\r\n",
+            3306: "MySQL server version 8.0.23\r\n",
+            5432: "You are now connected to database server\r\n",
+            27017: "Welcome to MongoDB shell\r\n",
         }
         
         try:
@@ -83,8 +87,7 @@ class HoneyPot:
         
         
 def main(): 
-   
-    
+ 
     honeypot = HoneyPot() 
     for port in honeypot.ports:
         listener = threading.Thread(target=honeypot.start_listener,
